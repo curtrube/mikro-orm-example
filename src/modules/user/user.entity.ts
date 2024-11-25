@@ -1,9 +1,31 @@
-import { BeforeCreate, BeforeUpdate, EventArgs, Entity, EntityRepositoryType, Property, OneToMany, Collection } from '@mikro-orm/core';
-import crypto from 'crypto';
+import {
+  BeforeCreate,
+  BeforeUpdate,
+  EventArgs,
+  Entity,
+  EntityRepositoryType,
+  Property,
+  OneToMany,
+  Collection,
+  Embeddable,
+  Embedded,
+} from '@mikro-orm/core';
 import { hash, verify } from 'argon2';
 import { BaseEntity } from '../common/base.entity.js';
 import { UserRepository } from './user.repository.js';
 import { Article } from '../article/article.entity.js';
+
+@Embeddable()
+export class Social {
+  @Property()
+  twitter?: string;
+
+  @Property()
+  facebook?: string;
+
+  @Property()
+  linkedin?: string;
+}
 
 @Entity({ repository: () => UserRepository })
 export class User extends BaseEntity<'bio'> {
@@ -27,6 +49,9 @@ export class User extends BaseEntity<'bio'> {
 
   @OneToMany({ mappedBy: 'author' })
   articles = new Collection<Article>(this);
+
+  @Embedded(() => Social, { object: true })
+  social?: Social;
 
   constructor(fullName: string, email: string, password: string) {
     super();

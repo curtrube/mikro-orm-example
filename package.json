@@ -20,7 +20,8 @@
     "@mikro-orm/seeder": "^6.4.0",
     "@mikro-orm/sqlite": "^6.4.0",
     "argon2": "^0.41.1",
-    "fastify": "^5.1.0"
+    "fastify": "^5.1.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@mikro-orm/cli": "^6.4.0",

@@ -39,4 +39,23 @@ test('login', async () => {
 
   expect(res2.statusCode).toBe(401);
   expect(res2.json()).toMatchObject({ error: 'Invalid combination of email and password' });
+
+  // const res3 = await app.inject({
+  //   method: 'get',
+  //   url: 'user/profile',
+  //   payload: {
+  //     email: 'foo@bar.com',
+  //     password: 'password456',
+  //   },
+  // });
+
+  // expect(res3.statusCode).toBe(200);
+  // expect(res3.json()).toMatchObject({
+  //   id: 1,
+  //   createdAt: '2024-11-25T20:05:50.680Z',
+  //   updatedAt: '2024-11-25T20:05:50.680Z',
+  //   fullName: 'Foo Bar',
+  //   email: 'foo1@bar.com',
+  //   bio: '',
+  // });
 });

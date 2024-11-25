@@ -4,24 +4,35 @@ import { EntityData } from '@mikro-orm/core';
 import { wrap } from '@mikro-orm/sqlite';
 import { User } from './user.entity.js';
 import { getUserFromToken } from '../common/utils.js';
+import { z } from 'zod';
+
+const socialSchema = z.object({
+  twitter: z.string().optional(),
+  facebook: z.string().optional(),
+  linkedin: z.string().optional(),
+});
+
+const userSchema = z.object({
+  email: z.string(),
+  fullName: z.string(),
+  password: z.string(),
+  bio: z.string().optional(),
+  social: socialSchema.optional(),
+});
 
 export async function registerUserRoutes(app: FastifyInstance) {
   const db = await initORM();
   // register new user
   app.post('/sign-up', async (request) => {
-    const body = request.body as EntityData<User>;
+    const dto = userSchema.parse(request.body);
 
-    if (!body.email || !body.fullName || !body.password) {
-      throw new Error('One of required fields is missing: email, fullName, password');
-    }
-
-    if (await db.user.exists(body.email)) {
+    if (await db.user.exists(dto.email)) {
       throw new Error('This email is already registered, maybe you want to sign in?');
     }
 
-    const user = new User(body.fullName, body.email, body.password);
-    user.bio = body.bio ?? '';
-    await db.em.persist(user).flush();
+    // thanks to zod, our `dto` is fully typed and passes the `em.create()` checks
+    const user = db.user.create(dto);
+    await db.em.flush(); // no need for explicit `em.persist()` when we use `em.create()`
 
     user.token = app.jwt.sign({ id: user.id });
 

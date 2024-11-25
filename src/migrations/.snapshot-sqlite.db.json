@@ -131,7 +131,18 @@
           "primary": false,
           "nullable": false,
           "length": null,
+          "default": "''",
           "mappedType": "text"
+        },
+        "social": {
+          "name": "social",
+          "type": "json",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": null,
+          "mappedType": "json"
         }
       },
       "name": "user",
