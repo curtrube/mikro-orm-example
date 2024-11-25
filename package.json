@@ -1,0 +1,32 @@
+{
+  "name": "mikro-orm-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/server.ts",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@fastify/jwt": "^9.0.1",
+    "@mikro-orm/core": "^6.4.0",
+    "@mikro-orm/migrations": "^6.4.0",
+    "@mikro-orm/reflection": "^6.4.0",
+    "@mikro-orm/seeder": "^6.4.0",
+    "@mikro-orm/sqlite": "^6.4.0",
+    "argon2": "^0.41.1",
+    "fastify": "^5.1.0"
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "^6.4.0",
+    "@types/node": "^22.9.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.5"
+  }
+}
